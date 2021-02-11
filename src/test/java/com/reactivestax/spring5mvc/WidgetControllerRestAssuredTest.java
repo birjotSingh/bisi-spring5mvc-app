@@ -29,113 +29,116 @@ import static org.apache.http.HttpStatus.SC_CREATED;
 
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@SpringBootTest(webEnvironment=SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class WidgetControllerRestAssuredTest {
 
-	@Value("${local.server.port}")
-	int port;
+    @Value("${local.server.port}")
+    int port;
 
-	@MockBean
-	WidgetRepository widgetRepository;
+    @Value("${server.servlet.context-path}")
+    String serverContextPath;
 
-	@MockBean
-	WidgetService widgetService;
+    @MockBean
+    WidgetRepository widgetRepository;
 
-	@MockBean
-	ValidationRuleFactoryForWidgetController validationRuleFactoryForWidgetController;
+    @MockBean
+    WidgetService widgetService;
 
-	String baseUrl;
+    @MockBean
+    ValidationRuleFactoryForWidgetController validationRuleFactoryForWidgetController;
 
-	@BeforeAll
-	public void setup(){
-		RestAssured.port = port;
-		baseUrl = "http://localhost:"+port+"/rest/widget";
+    String baseUrl;
 
-	}
+    @BeforeAll
+    public void setup() {
+        RestAssured.port = port;
+        baseUrl = "http://localhost:" + port + serverContextPath + "/rest/widget";
 
-
-	@Test
-	public void testPostWidget() throws Exception {
-		BDDMockito.given(widgetService.saveWidget(ArgumentMatchers.anyObject())).willReturn(new Widget("name123","description123"));
+    }
 
 
-		Gson gson = new Gson();
-		String widgetJsonString = gson.toJson(new Widget("name123", "description123"));
+    @Test
+    public void testPostWidget() throws Exception {
+        BDDMockito.given(widgetService.saveWidget(ArgumentMatchers.anyObject())).willReturn(new Widget("name123", "description123"));
 
-		ClientMetaData clientMetaData = gson.fromJson("{\"appOrg\":\"com.banking\",\"language\":\"en\",\"appCode\":\"ABC0\",\"appVersion\":\"3.2\",\"physicalLocationId\":\"123\",\"assetId\":\"laptop-123\",\"legacyId\":\"123\",\"requestUniqueId\":\"123e4567-e89b-12d3-a456-556642440000\"}", ClientMetaData.class);
 
-		System.out.println("baseUrl = " + baseUrl);
-		Response response =
+        Gson gson = new Gson();
+        String widgetJsonString = gson.toJson(new Widget("name123", "description123"));
 
-				RestAssured
-						.given()
-						.header("client-metadata", clientMetaData)
-						.contentType(ContentType.JSON)
-						.request()
-						.body("{\n" +
-								"\"name\": \"name23324\",\n" +
-								"\"description\":\"description234234\"\n" +
-								"}")
-						.when()
-						.post(baseUrl)
-						.then()
-						.statusCode(SC_CREATED)
-						.contentType(ContentType.JSON)
+        ClientMetaData clientMetaData = gson.fromJson("{\"appOrg\":\"com.banking\",\"language\":\"en\",\"appCode\":\"ABC0\",\"appVersion\":\"3.2\",\"physicalLocationId\":\"123\",\"assetId\":\"laptop-123\",\"legacyId\":\"123\",\"requestUniqueId\":\"123e4567-e89b-12d3-a456-556642440000\"}", ClientMetaData.class);
+
+        System.out.println("baseUrl = " + baseUrl);
+        Response response =
+
+                RestAssured
+                        .given()
+                        .header("client-metadata", clientMetaData)
+                        .contentType(ContentType.JSON)
+                        .request()
+                        .body("{\n" +
+                                "\"name\": \"name23324\",\n" +
+                                "\"description\":\"description234234\"\n" +
+                                "}")
+                        .when()
+                        .post(baseUrl)
+                        .then()
+                        .statusCode(SC_CREATED)
+                        .contentType(ContentType.JSON)
 //						.assertThat()
 //						.body(Matchers.notNull())
-						.extract().response();
-		String responseString = response.asString();
-		System.out.println("responseString:"+responseString);
+                        .extract().response();
+        String responseString = response.asString();
+        System.out.println("responseString:" + responseString);
 
-		Widget widget = gson.fromJson(responseString, Widget.class);
-		Assertions.assertThat(StringUtils.equalsIgnoreCase(widget.getDescription(),"description234234"));
-		Assertions.assertThat(StringUtils.equalsIgnoreCase(widget.getName(),"name23324"));
-	}
+        Widget widget = gson.fromJson(responseString, Widget.class);
+        Assertions.assertThat(StringUtils.equalsIgnoreCase(widget.getDescription(), "description234234"));
+        Assertions.assertThat(StringUtils.equalsIgnoreCase(widget.getName(), "name23324"));
+    }
 
-	@Disabled("for demo purposes")
-	public void testPostWidgetMissingClientMetadata() throws Exception {
-		BDDMockito.given(widgetService.saveWidget(ArgumentMatchers.anyObject())).willReturn(new Widget("name123","description123"));
+    @Disabled("for demo purposes")
+    public void testPostWidgetMissingClientMetadata() throws Exception {
+        BDDMockito.given(widgetService.saveWidget(ArgumentMatchers.anyObject())).willReturn(new Widget("name123", "description123"));
 
 
-		Gson gson = new Gson();
-		String widgetJsonString = gson.toJson(new Widget("name123", "description123"));
+        Gson gson = new Gson();
+        String widgetJsonString = gson.toJson(new Widget("name123", "description123"));
 
-		ClientMetaData clientMetaData = gson.fromJson("{\"appOrg\":\"com.banking\",\"language\":\"en\",\"appCode\":\"ABC0\",\"appVersion\":\"3.2\",\"physicalLocationId\":\"123\",\"assetId\":\"laptop-123\",\"legacyId\":\"123\",\"requestUniqueId\":\"123e4567-e89b-12d3-a456-556642440000\"}", ClientMetaData.class);
+        ClientMetaData clientMetaData = gson.fromJson("{\"appOrg\":\"com.banking\",\"language\":\"en\",\"appCode\":\"ABC0\",\"appVersion\":\"3.2\",\"physicalLocationId\":\"123\",\"assetId\":\"laptop-123\",\"legacyId\":\"123\",\"requestUniqueId\":\"123e4567-e89b-12d3-a456-556642440000\"}", ClientMetaData.class);
 
-		System.out.println("baseUrl = " + baseUrl);
-		Response response =
+        System.out.println("baseUrl = " + baseUrl);
+        Response response =
 
-				RestAssured
-						.given()
-						//.header("client-metadata", clientMetaData)
-						.contentType(ContentType.JSON)
-						.request()
-						.body("{\n" +
-								"\"name\": \"name23324\",\n" +
-								"\"description\":\"description234234\"\n" +
-								"}")
-						.when()
-						.post(baseUrl)
-						.then()
-						.statusCode(SC_BAD_REQUEST)
-						.contentType(ContentType.JSON)
+                RestAssured
+                        .given()
+                        //.header("client-metadata", clientMetaData)
+                        .contentType(ContentType.JSON)
+                        .request()
+                        .body("{\n" +
+                                "\"name\": \"name23324\",\n" +
+                                "\"description\":\"description234234\"\n" +
+                                "}")
+                        .when()
+                        .post(baseUrl)
+                        .then()
+                        .statusCode(SC_BAD_REQUEST)
+                        .contentType(ContentType.JSON)
 
-						.extract().response();
+                        .extract().response();
 
-		String responseString = response.asString();
-		System.out.println("responseString:"+responseString);
+        String responseString = response.asString();
+        System.out.println("responseString:" + responseString);
 
-	ErrorInfo errorInfo= gson.fromJson(responseString, ErrorInfo.class);
-		Assertions.assertThat(StringUtils.equalsIgnoreCase(errorInfo.getDetailedMessages().get(0).getMessage(),"client_metadata request header cannot be missing or have blank value"));
+        ErrorInfo errorInfo = gson.fromJson(responseString, ErrorInfo.class);
+        Assertions.assertThat(StringUtils.equalsIgnoreCase(errorInfo.getDetailedMessages().get(0).getMessage(), "client_metadata request header cannot be missing or have blank value"));
 
-}
+    }
 
-	private ClientMetaData retrieveClientMetadataFromFile(String fileName) throws IOException {
-		InputStreamReader reader = new InputStreamReader(WidgetControllerRestAssuredTest.class.getResourceAsStream(fileName),"UTF-8");
-		Gson gson = new Gson();
-		ClientMetaData clientMetaData = gson.fromJson(reader, ClientMetaData.class);
-		reader.close();
-		return clientMetaData;
-	}
+    private ClientMetaData retrieveClientMetadataFromFile(String fileName) throws IOException {
+        InputStreamReader reader = new InputStreamReader(WidgetControllerRestAssuredTest.class.getResourceAsStream(fileName), "UTF-8");
+        Gson gson = new Gson();
+        ClientMetaData clientMetaData = gson.fromJson(reader, ClientMetaData.class);
+        reader.close();
+        return clientMetaData;
+    }
 
 }
