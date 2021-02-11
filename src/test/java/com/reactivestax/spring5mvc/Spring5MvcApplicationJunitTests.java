@@ -8,13 +8,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@SpringBootTest
-@ExtendWith(SpringExtension.class)
 public class Spring5MvcApplicationJunitTests {
 
     @Test
@@ -100,11 +100,4 @@ public class Spring5MvcApplicationJunitTests {
         Assertions.assertTrue(errorMap.size() == 0, "there has to be one error");
         //
     }
-
-
-//	@Test
-//	public void testPostWidget(){
-//
-//	}
-
 }
