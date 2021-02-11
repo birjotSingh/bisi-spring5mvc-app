@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Widget Details</title>
-    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
 </head>
 
 <body>
@@ -12,7 +13,7 @@
     <ol class="breadcrumb">
         <li><a href="#" th:href="@{'/widgets'}">Home</a></li>
     </ol>
-    <div class="row"><h2>Widget Details</h2></div>
+    <h2 th:text="#{widget.details}">Widget Details_backup</h2>
     <div th:object=${widget}>
         <form class="form-horizontal">
             <div class="form-group">
@@ -45,7 +46,8 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
-<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
 </body>
 
 </html>
