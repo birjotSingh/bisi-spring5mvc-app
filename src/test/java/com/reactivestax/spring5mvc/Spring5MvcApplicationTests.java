@@ -39,62 +39,62 @@ public class Spring5MvcApplicationTests {
 		Assertions.assertTrue( StringUtils.startsWith(errorMap.get("description"), "description also has to start with"),"there should be an error related to description");
 	}
 
-//	@Test
-//	public void testWithWrongNameAndCorrectDescription() {
-//		//setup
-//		Widget widget = new Widget();
-//		Map<String, String> errorMap = new HashMap<>();
-//		widget.setName("213name");
-//		widget.setDescription("desc123");
-//
-//		//actual SUT
-//		descriptionValidationRule.validate(widget, errorMap);
-//		nameValidationRule.validate(widget, errorMap);
-//
-//		//assertions
-//		Assert.assertTrue("there has to be one error", errorMap.size() == 1);
-//		Assert.assertTrue("there should be an error related to name", errorMap.get("name") != null);
-//		Assert.assertTrue("there should be an error related to name", StringUtils.startsWith(errorMap.get("name"), "name also has to start with"));
-//	}
-//
-//	@Test
-//	public void testWithNameAndDescriptionWrongDescription() {
-//		//setup
-//		Widget widget = new Widget();
-//		Map<String, String> errorMap = new HashMap<>();
-//		widget.setName("213name");
-//		widget.setDescription("123desc123");
-//
-//		//actual SUT
-//		descriptionValidationRule.validate(widget, errorMap);
-//		nameValidationRule.validate(widget, errorMap);
-//
-//		//assertions for name
-//		Assert.assertTrue("there has to be one error", errorMap.size() == 2);
-//		Assert.assertTrue("there should be an error related to name", errorMap.get("name") != null);
-//		Assert.assertTrue("there should be an error related to name", StringUtils.startsWith(errorMap.get("name"), "name also has to start with"));
-//		//
-//		//assertions for description
-//
-//		Assert.assertTrue("there should be an error related to name", errorMap.get("name") != null);
-//		Assert.assertTrue("there should be an error related to name", StringUtils.startsWith(errorMap.get("name"), "name also has to start with"));
-//	}
-//
-//	@Test
-//	public void testWithCorrectNameAndDescription() {
-//		//setup
-//		Widget widget = new Widget();
-//		Map<String, String> errorMap = new HashMap<>();
-//		widget.setName("name123");
-//		widget.setDescription("desc123");
-//		//actual SUT
-//		descriptionValidationRule.validate(widget, errorMap);
-//		nameValidationRule.validate(widget, errorMap);
-//
-//		//assertions
-//		Assert.assertTrue("there has to be one error", errorMap.size() == 0);
-//		//
-//	}
+	@Test
+	public void testWithWrongNameAndCorrectDescription() {
+		//setup
+		Widget widget = new Widget();
+		Map<String, String> errorMap = new HashMap<>();
+		widget.setName("213name");
+		widget.setDescription("desc123");
+
+		//actual SUT
+		descriptionValidationRule.validate(widget, errorMap);
+		nameValidationRule.validate(widget, errorMap);
+
+		//assertions
+		Assertions.assertTrue(errorMap.size() == 1, "there has to be one error");
+		Assertions.assertTrue(errorMap.get("name") != null, "there should be an error related to name");
+		Assertions.assertTrue(StringUtils.startsWith(errorMap.get("name"), "name also has to start with"), "there should be an error related to name");
+	}
+
+	@Test
+	public void testWithNameAndDescriptionWrongDescription() {
+		//setup
+		Widget widget = new Widget();
+		Map<String, String> errorMap = new HashMap<>();
+		widget.setName("213name");
+		widget.setDescription("123desc123");
+
+		//actual SUT
+		descriptionValidationRule.validate(widget, errorMap);
+		nameValidationRule.validate(widget, errorMap);
+
+		//assertions for name
+		Assertions.assertTrue(errorMap.size() == 2, "there has to be one error");
+		Assertions.assertTrue(errorMap.get("name") != null, "there should be an error related to name");
+		Assertions.assertTrue(StringUtils.startsWith(errorMap.get("name"), "name also has to start with"), "there should be an error related to name");
+		//
+		//assertions for description
+
+		Assertions.assertTrue(errorMap.get("name") != null, "there should be an error related to name");
+		Assertions.assertTrue(StringUtils.startsWith(errorMap.get("name"), "name also has to start with"), "there should be an error related to name");
+	}
+
+	@Test
+	public void testWithCorrectNameAndDescription() {
+		//setup
+		Widget widget = new Widget();
+		Map<String, String> errorMap = new HashMap<>();
+		widget.setName("name123");
+		widget.setDescription("desc123");
+		//actual SUT
+		descriptionValidationRule.validate(widget, errorMap);
+		nameValidationRule.validate(widget, errorMap);
+
+		//assertions
+		Assertions.assertTrue(errorMap.size() == 0, "there has to be one error");
+		//
+	}
 
 
 }

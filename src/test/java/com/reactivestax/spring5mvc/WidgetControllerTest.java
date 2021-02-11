@@ -40,17 +40,20 @@ public class WidgetControllerTest {
 	@MockBean
 	ValidationRuleFactoryForWidgetController validationRuleFactoryForWidgetController;
 
+	//GET good case
 	@Test
 	public void testGetWidget() throws Exception {
-		BDDMockito.given(widgetService.findWidgetById(1L)).willReturn(Optional.of(new Widget("name123","description123")));
+		BDDMockito
+				.given(widgetService.findWidgetById(1L))
+				.willReturn(Optional.of(new Widget("name123","description123")));
 
 		mockMvc.perform(MockMvcRequestBuilders.get("/rest/widget/1"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("name").value("name123"))
 				.andExpect(jsonPath("description").value("description123"));
-
 	}
 
+	// GET bad case
 	@Test
 	public void testGetWidgetWithNoDataFoundError() throws Exception {
 		BDDMockito.given(widgetService.findWidgetByIdNotOptional(ArgumentMatchers.anyLong())).willThrow(new NoDataFoundException());
@@ -59,6 +62,7 @@ public class WidgetControllerTest {
 				.andExpect(status().isNoContent());
 	}
 
+	// POST good case
 	@Test
 	public void testPostWidget() throws Exception {
 		BDDMockito.given(widgetService.saveWidget(ArgumentMatchers.anyObject())).willReturn(new Widget("name123","description123"));
@@ -72,4 +76,8 @@ public class WidgetControllerTest {
 				.andExpect(jsonPath("name").value("name123"))
 				.andExpect(jsonPath("description").value("description123"));
 	}
+
+//	@Test    // POST bad case
+	//TODO: Robin -- Add a validation failed test as well and pass wrong name and description value.
+	//expect the http STatus to be 400 in this case.
 }
