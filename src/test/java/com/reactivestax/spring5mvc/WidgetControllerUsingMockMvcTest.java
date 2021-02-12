@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
-public class WidgetControllerTest {
+public class WidgetControllerUsingMockMvcTest {
 
 	@Autowired
 	MockMvc mockMvc;

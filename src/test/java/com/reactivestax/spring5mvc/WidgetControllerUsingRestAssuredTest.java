@@ -30,7 +30,7 @@ import static org.apache.http.HttpStatus.SC_CREATED;
 @ExtendWith(SpringExtension.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class WidgetControllerRestAssuredTest {
+public class WidgetControllerUsingRestAssuredTest {
 
     @Value("${local.server.port}")
     int port;
@@ -134,7 +134,7 @@ public class WidgetControllerRestAssuredTest {
     }
 
     private ClientMetaData retrieveClientMetadataFromFile(String fileName) throws IOException {
-        InputStreamReader reader = new InputStreamReader(WidgetControllerRestAssuredTest.class.getResourceAsStream(fileName), "UTF-8");
+        InputStreamReader reader = new InputStreamReader(WidgetControllerUsingRestAssuredTest.class.getResourceAsStream(fileName), "UTF-8");
         Gson gson = new Gson();
         ClientMetaData clientMetaData = gson.fromJson(reader, ClientMetaData.class);
         reader.close();

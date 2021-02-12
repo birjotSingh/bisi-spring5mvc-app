@@ -26,12 +26,12 @@ public class WidgetRepositoryTest {
 	@Test
 	public void getWidgetReturnWidgetDetails(){
 
-		Widget save1 = widgetRepository.save(new Widget("name6677", "description6677"));
-		Widget save2 = widgetRepository.save(new Widget("name6678", "description6678"));
+		Widget savedWidget1 = widgetRepository.save(new Widget("name6677", "description6677"));
+		Widget savedWidget2 = widgetRepository.save(new Widget("name6678", "description6678"));
 
 
-		Optional<Widget> widgetById = widgetRepository.findById(save1.getId());
-		Optional<Widget> widgetById2 = widgetRepository.findById(save2.getId());
+		Optional<Widget> widgetById = widgetRepository.findById(savedWidget1.getId());
+		Optional<Widget> widgetById2 = widgetRepository.findById(savedWidget2.getId());
 
 		Assertions.assertThat(widgetById).isPresent();
 		Assertions.assertThat(widgetById2).isPresent();
