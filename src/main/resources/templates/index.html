@@ -25,27 +25,43 @@
         </div>
       </div>
 
-      <h3>History</h3>
+      <div class="container">
+          <table class="table">
+            <h3>History</h3>
+            <tr>
+              <th>Name</th>
+              <th>Amount</th>
+            </tr>
+            <tr th:each="expense : ${expenses}" th:object="${expense}">
+              <td th:text="*{name}"></td>
+              <td th:text="*{amount}"></td>
+              <!--<td><a class="btn btn-default" href="#" th:href="@{'/widget/' + *{id}}">View</a> </td>
+              <td><a class="btn btn-default" href="#" th:href="@{'/widget/edit/' + *{id}}">Edit</a> </td>
+              <td><a class="btn btn-default" href="#" th:href="@{'/widget/delete/' +  *{id}}">Delete</a> </td>-->
+            </tr>
+          </table>
+
+      </div>
       <ul id="list" class="list">
+
         <!-- <li class="minus">
           Cash <span>-$400</span><button class="delete-btn">x</button>
         </li> -->
       </ul>
 
       <h3>Add new transaction</h3>
-      <form id="form" >
-        <!--th:object="${}" th:action="@{}" method="post"-->
+      <form id="form" th:object="${finances}" th:action="@{/index/entry}" method="post" >
+        <!--th:object="${finances}" th:action="@{/index/entry}" method="post"-->
         <div class="form-control">
           <label for="text">Text</label>
-          <input type="text" id="text" placeholder="Enter text..." />
+          <input type="text" id="text"      th:field="*{name}"        placeholder="Enter text..." />
         </div>
+
         <div class="form-control">
-          <label for="amount"
-            >Amount <br />
-            (negative - expense, positive - income)</label
-          >
-          <input type="number" id="amount" placeholder="Enter amount..." />
+          <label for="amount">Amount <br /> (negative - expense, positive - income)</label>
+          <input type="number" id="amount"     th:field="*{amount}"      placeholder="Enter amount..." />
         </div>
+
         <button class="btn">Add transaction</button>
       </form>
     </div>
