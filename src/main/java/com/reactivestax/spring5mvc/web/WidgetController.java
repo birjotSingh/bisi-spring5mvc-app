@@ -1,7 +1,6 @@
 package com.reactivestax.spring5mvc.web;
 
 import com.reactivestax.spring5mvc.model.Widget;
-import com.reactivestax.spring5mvc.repository.WidgetRepository;
 import com.reactivestax.spring5mvc.repository.WidgetRepositoryImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class WidgetController {
 
-    @Autowired
-    private WidgetRepository widgetRepository;
+    // @Autowired
+    //private WidgetRepository widgetRepository;
 
     @Autowired
     WidgetRepositoryImp widgetRepositoryImp;
@@ -41,8 +40,14 @@ public class WidgetController {
      */
     @PostMapping("/widget")
     public String createWidget(Widget widget, Model model) {
-        widget = widgetRepositoryImp.saveWidget(widget);
-        return "redirect:/widget/" + widget.getId();
+        if(widget.getId()==null) {
+            widget = widgetRepositoryImp.saveWidget(widget);
+            return "redirect:/widget/" + widget.getId();
+        }else{
+            widgetRepositoryImp.updateWidget(widget);
+            return "redirect:/widget/" + widget.getId();
+        }
+
     }
 
     /**
@@ -57,7 +62,7 @@ public class WidgetController {
 //        model.addAttribute("widget", widgetRepository.findById(id).orElse(new Widget()));
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("widget");
-        modelAndView.addObject("widget", widgetRepositoryImp.findById(Math.toIntExact(id)));
+        modelAndView.addObject("widget", widgetRepositoryImp.findWidgetById(Math.toIntExact(id)));
         return modelAndView;
     }
 
@@ -69,7 +74,7 @@ public class WidgetController {
      */
     @GetMapping("/widgets")
     public String getWidgets(Model model) {
-        model.addAttribute("widgets", widgetRepository.findAll());
+        model.addAttribute("widgets", widgetRepositoryImp.findAllWidgets());
         return "widgets";
     }
 
@@ -82,7 +87,7 @@ public class WidgetController {
      */
     @GetMapping("/widget/edit/{id}")
     public String editWidget(@PathVariable Long id, Model model) {
-        model.addAttribute("widget", widgetRepository.findById(id).orElse(new Widget()));
+        model.addAttribute("widget", widgetRepositoryImp.findWidgetById(Math.toIntExact(id)));//.orElse(new Widget()));
         return "widgetform";
     }
 
@@ -94,7 +99,7 @@ public class WidgetController {
      */
     @PostMapping("/widget/{id}")
     public String updateWidget(Widget widget) {
-        widgetRepository.save(widget);
+        widgetRepositoryImp.updateWidget(widget);
         return "redirect:/widget/" + widget.getId();
     }
 
@@ -106,7 +111,8 @@ public class WidgetController {
      */
     @GetMapping("/widget/delete/{id}")
     public String deleteWidget(@PathVariable Long id) {
-        widgetRepository.deleteById(id);
+        // widgetRepository.deleteById(id);
+        widgetRepositoryImp.deleteWidgetById(Math.toIntExact(id));
         return "redirect:/widgets";
     }
 }

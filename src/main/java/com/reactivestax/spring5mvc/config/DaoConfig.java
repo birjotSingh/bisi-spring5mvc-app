@@ -2,7 +2,6 @@ package com.reactivestax.spring5mvc.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +9,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
 
 @Configuration
 @PropertySource("db.props")
@@ -26,11 +24,10 @@ public class DaoConfig {
     String user;
 
     @Bean
-    public DataSource createDataSource(){
+    public DataSource createDataSource() {
 
         HikariConfig dataSource = new HikariConfig();
         dataSource.setJdbcUrl(url);
-        //dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setPassword(password);
         dataSource.setUsername(user);
         return new HikariDataSource(dataSource);
@@ -38,13 +35,11 @@ public class DaoConfig {
     }
 
     @Bean
-    public JdbcTemplate getJdbcTemplate(){
+    public JdbcTemplate getJdbcTemplate() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         jdbcTemplate.setDataSource(createDataSource());
         return jdbcTemplate;
     }
-
-
 
 
 }

@@ -13,6 +13,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public class WidgetRepositoryImp implements WidgetRepo {
@@ -35,7 +38,7 @@ public class WidgetRepositoryImp implements WidgetRepo {
                 ps.setString(2, widget.getDescription());
                 return ps;
             }
-        },keyHolder);
+        }, keyHolder);
 
         int widgetId = keyHolder.getKey().intValue();
         widget.setId((long) widgetId);
@@ -43,9 +46,41 @@ public class WidgetRepositoryImp implements WidgetRepo {
     }
 
     @Override
-    public Widget findById(Integer id) {
+    public Widget findWidgetById(Integer id) {
         String query = "select id, Name, Description from widget_details where id = ?";
         Widget widget = jdbcTemplate.queryForObject(query, new Object[]{id}, new BeanPropertyRowMapper<>(Widget.class));
         return widget;
     }
+
+    @Override
+    public void deleteWidgetById(Integer id) {
+        String query = "delete from widget_details where id =?";
+        jdbcTemplate.update(query, id);
+        System.out.println("deleted row!");
+    }
+
+    @Override
+    public List<Widget> findAllWidgets() {
+        String query = "select * from widget_details";
+        List<Widget> widgetList = new ArrayList<>();
+        List<Map<String, Object>> maps = jdbcTemplate.queryForList(query);
+
+        for (Map<String, Object> widgetRow : maps) {
+            Widget widget = new Widget();
+            widget.setId((long) Integer.parseInt(String.valueOf(widgetRow.get("id"))));
+            widget.setName(String.valueOf(widgetRow.get("name")));
+            widget.setDescription(String.valueOf(widgetRow.get("description")));
+            widgetList.add(widget);
+        }
+        return widgetList;
+    }
+
+    @Override
+    public void updateWidget(Widget widget) {
+        String query = "update widget_details set name=?, description=? where id=?";
+        Object[] args = new Object[]{widget.getName(), widget.getDescription(), widget.getId()};
+        int flag = jdbcTemplate.update(query, args);
+    }
+
+
 }
