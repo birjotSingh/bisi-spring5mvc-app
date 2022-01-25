@@ -40,14 +40,13 @@ public class WidgetController {
      */
     @PostMapping("/widget")
     public String createWidget(Widget widget, Model model) {
-        if(widget.getId()==null) {
+        if (widget.getId() == null) {
             widget = widgetRepositoryImp.saveWidget(widget);
             return "redirect:/widget/" + widget.getId();
-        }else{
+        } else {
             widgetRepositoryImp.updateWidget(widget);
             return "redirect:/widget/" + widget.getId();
         }
-
     }
 
     /**
