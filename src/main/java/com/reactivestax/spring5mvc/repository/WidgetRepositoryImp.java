@@ -2,6 +2,7 @@ package com.reactivestax.spring5mvc.repository;
 
 import com.reactivestax.spring5mvc.model.Widget;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -34,9 +35,17 @@ public class WidgetRepositoryImp implements WidgetRepo {
                 ps.setString(2, widget.getDescription());
                 return ps;
             }
-        });
+        },keyHolder);
+
         int widgetId = keyHolder.getKey().intValue();
         widget.setId((long) widgetId);
+        return widget;
+    }
+
+    @Override
+    public Widget findById(Integer id) {
+        String query = "select id, Name, Description from widget_details where id = ?";
+        Widget widget = jdbcTemplate.queryForObject(query, new Object[]{id}, new BeanPropertyRowMapper<>(Widget.class));
         return widget;
     }
 }

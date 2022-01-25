@@ -1,5 +1,6 @@
 package com.reactivestax.spring5mvc.config;
 
+import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,12 +28,12 @@ public class DaoConfig {
     @Bean
     public DataSource createDataSource(){
 
-        HikariDataSource dataSource = new HikariDataSource();
+        HikariConfig dataSource = new HikariConfig();
         dataSource.setJdbcUrl(url);
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        //dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setPassword(password);
         dataSource.setUsername(user);
-        return dataSource;
+        return new HikariDataSource(dataSource);
 
     }
 

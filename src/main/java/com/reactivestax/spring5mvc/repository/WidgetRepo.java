@@ -4,4 +4,5 @@ import com.reactivestax.spring5mvc.model.Widget;
 
 public interface WidgetRepo {
     public Widget saveWidget(Widget widget);
+    public Widget findById(Integer id);
 }

@@ -22,6 +22,7 @@ public class WidgetController {
 
     /**
      * Load the new widget page.
+     *
      * @param model
      * @return
      */
@@ -33,18 +34,20 @@ public class WidgetController {
 
     /**
      * Create a new widget.
+     *
      * @param widget
      * @param model
      * @return
      */
     @PostMapping("/widget")
     public String createWidget(Widget widget, Model model) {
-       Widget newWidget = widgetRepositoryImp.saveWidget(widget);
+        widget = widgetRepositoryImp.saveWidget(widget);
         return "redirect:/widget/" + widget.getId();
     }
 
     /**
      * Get a widget by ID.
+     *
      * @param id
      * @param model
      * @return
@@ -54,12 +57,13 @@ public class WidgetController {
 //        model.addAttribute("widget", widgetRepository.findById(id).orElse(new Widget()));
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("widget");
-        modelAndView.addObject("widget", widgetRepository.findById(id).orElse(new Widget()));
-        return  modelAndView;
+        modelAndView.addObject("widget", widgetRepositoryImp.findById(Math.toIntExact(id)));
+        return modelAndView;
     }
 
     /**
      * Get all widgets.
+     *
      * @param model
      * @return
      */
@@ -71,6 +75,7 @@ public class WidgetController {
 
     /**
      * Load the edit widget page for the widget with the specified ID.
+     *
      * @param id
      * @param model
      * @return
@@ -83,6 +88,7 @@ public class WidgetController {
 
     /**
      * Update a widget.
+     *
      * @param widget
      * @return
      */
@@ -94,11 +100,12 @@ public class WidgetController {
 
     /**
      * Delete a widget by ID.
+     *
      * @param id
      * @return
      */
     @GetMapping("/widget/delete/{id}")
-    public String deleteWidget(@PathVariable  Long id) {
+    public String deleteWidget(@PathVariable Long id) {
         widgetRepository.deleteById(id);
         return "redirect:/widgets";
     }
