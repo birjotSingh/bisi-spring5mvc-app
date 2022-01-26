@@ -49,4 +49,10 @@ public class ApplicationController{
         repositoryImp.deleteById(Math.toIntExact(id));
         return "redirect:/index";
     }
+
+    @GetMapping("/widget/edit/{id}")
+    public String editTransaction(@PathVariable Integer id, Model model) {
+        model.addAttribute("finances", repositoryImp.getExpenseById(Math.toIntExact(id)));//.orElse(new Widget()));
+        return "index";
+    }
 }
