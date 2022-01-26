@@ -32,10 +32,10 @@ public class ApplicationController {
     @PostMapping("/index/entry")
     public String newEntry(Expense expense, Model model) {
         if (expense.getId() == null) {
-            expense.setCreationDate(calculator.currentDate());
+            expense.setCdate(calculator.currentDate());
             repositoryImp.save(expense);
         } else {
-            expense.setEditedDate(calculator.currentDate());
+            expense.setDateEdited(calculator.currentDate());
             repositoryImp.update(expense);
         }
         return "redirect:/index";
@@ -44,13 +44,15 @@ public class ApplicationController {
 
     @GetMapping("/index/view/{id}")
     public String viewEntry(@PathVariable Integer id, Model model) {
-        model.addAttribute("transaction", repositoryImp.getExpenseById(id));
+        Expense expenseById = repositoryImp.getExpenseById(id);
+        System.out.println("00--------------------------------------00 : "+expenseById.getCdate());
+        model.addAttribute("transaction",expenseById );
         return "view";
     }
 
     @GetMapping("/index/delete/{id}")
     public String deleteWidget(@PathVariable Integer id) {
-        repositoryImp.deleteById(Math.toIntExact(id));
+        repositoryImp.deleteById(id);
         return "redirect:/index";
     }
 

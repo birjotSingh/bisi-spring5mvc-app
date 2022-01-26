@@ -26,7 +26,7 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
 
     @Override
     public Expense save(Expense expense) {
-        String query = "insert into expense (name, amount,date_creation) values (?,?,?)";
+        String query = "insert into expense (name, amount,cdate) values (?,?,?)";
 
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
@@ -34,7 +34,7 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
                 PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                 preparedStatement.setString(1, expense.getName());
                 preparedStatement.setInt(2, expense.getAmount());
-                preparedStatement.setString(3, expense.getCreationDate());
+                preparedStatement.setString(3, expense.getCdate());
                 return preparedStatement;
             }
         }, keyHolder);
@@ -76,8 +76,8 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
 
     @Override
     public void update(Expense expense) {
-        String query = "update expense set name=?, amount=?, date_creation=?, date_edited=? where id=?";
-        Object[] args = new Object[]{expense.getName(), expense.getAmount(), expense.getCreationDate(), expense.getEditedDate(), expense.getId()};
+        String query = "update expense set name=?, amount=?, dateEdited=? where id=?";
+        Object[] args = new Object[]{expense.getName(), expense.getAmount(), expense.getDateEdited(), expense.getId()};
         jdbcTemplate.update(query, args);
     }
 

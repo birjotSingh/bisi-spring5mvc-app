@@ -10,7 +10,7 @@ public class Expense {
     Integer id;
     String name;
     Integer amount;
-    String creationDate;
-    String editedDate;
+    String cdate;
+    String dateEdited;
 
 }
