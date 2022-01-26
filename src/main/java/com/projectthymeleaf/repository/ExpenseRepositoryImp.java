@@ -1,7 +1,6 @@
 package com.projectthymeleaf.repository;
 
 import com.projectthymeleaf.model.Expense;
-import com.projectthymeleaf.service.Calculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,9 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -37,7 +34,7 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
                 PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                 preparedStatement.setString(1, expense.getName());
                 preparedStatement.setInt(2, expense.getAmount());
-               preparedStatement.setString(3, expense.getCreationDate());
+                preparedStatement.setString(3, expense.getCreationDate());
                 return preparedStatement;
             }
         }, keyHolder);
@@ -75,6 +72,13 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
         String query = "delete from expense where id =?";
         jdbcTemplate.update(query, id);
         System.out.println("deleted row!");
+    }
+
+    @Override
+    public void update(Expense expense) {
+        String query = "update expense set name=?, amount=?, date_creation=?, date_edited=? where id=?";
+        Object[] args = new Object[]{expense.getName(), expense.getAmount(), expense.getCreationDate(), expense.getEditedDate(), expense.getId()};
+        jdbcTemplate.update(query, args);
     }
 
 

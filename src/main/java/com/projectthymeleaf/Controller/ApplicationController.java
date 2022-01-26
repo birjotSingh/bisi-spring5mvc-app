@@ -1,7 +1,6 @@
 package com.projectthymeleaf.Controller;
 
 import com.projectthymeleaf.model.Expense;
-import com.projectthymeleaf.repository.ExpenseRepository;
 import com.projectthymeleaf.repository.ExpenseRepositoryImp;
 import com.projectthymeleaf.service.Calculator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class ApplicationController{
+public class ApplicationController {
 
     @Autowired
     ExpenseRepositoryImp repositoryImp;
@@ -21,7 +20,7 @@ public class ApplicationController{
     Calculator calculator;
 
     @GetMapping("/index")
-    public String mainPage(Model model){
+    public String mainPage(Model model) {
         model.addAttribute("finances", new Expense());
         model.addAttribute("expenses", repositoryImp.findAllExpenses());
         model.addAttribute("balance", calculator.sumTotal());
@@ -31,16 +30,21 @@ public class ApplicationController{
     }
 
     @PostMapping("/index/entry")
-    public String newEntry(Expense expense, Model model){
-        expense.setCreationDate(calculator.currentDate());
-        repositoryImp.save(expense);
+    public String newEntry(Expense expense, Model model) {
+        if (expense.getId() == null) {
+            expense.setCreationDate(calculator.currentDate());
+            repositoryImp.save(expense);
+        } else {
+            expense.setEditedDate(calculator.currentDate());
+            repositoryImp.update(expense);
+        }
         return "redirect:/index";
     }
 
 
     @GetMapping("/index/view/{id}")
-    public String viewEntry(@PathVariable Integer id, Model model){
-        //model.addAttribute("id", id);
+    public String viewEntry(@PathVariable Integer id, Model model) {
+        model.addAttribute("transaction", repositoryImp.getExpenseById(id));
         return "view";
     }
 
@@ -50,9 +54,13 @@ public class ApplicationController{
         return "redirect:/index";
     }
 
-    @GetMapping("/widget/edit/{id}")
+    @GetMapping("/index/edit/{id}")
     public String editTransaction(@PathVariable Integer id, Model model) {
-        model.addAttribute("finances", repositoryImp.getExpenseById(Math.toIntExact(id)));//.orElse(new Widget()));
+        model.addAttribute("expenses", repositoryImp.findAllExpenses());
+        model.addAttribute("balance", calculator.sumTotal());
+        model.addAttribute("in", calculator.incomeCal());
+        model.addAttribute("out", calculator.expenseCal());
+        model.addAttribute("finances", repositoryImp.getExpenseById(id));
         return "index";
     }
 }

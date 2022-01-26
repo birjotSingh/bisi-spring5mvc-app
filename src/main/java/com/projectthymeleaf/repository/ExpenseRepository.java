@@ -10,5 +10,6 @@ public interface ExpenseRepository{
     public Expense getExpenseById(int id);
     public List<Expense> findAllExpenses();
     public void deleteById(Integer id);
+    public void update(Expense expense);
 
 }

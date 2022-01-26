@@ -37,7 +37,7 @@
               <td th:text="'$' + *{amount}"></td>
               <td><a class="btn btn-default" href="#" th:href="@{'/index/view/' + *{id}}">View</a> </td>
               <td><a class="btn btn-default" href="#" th:href="@{'/index/edit/' + *{id}}">Edit</a> </td>
-              <td><a class="btn btn-default" href="#" th:href="@{'/index/delete/' +  *{id}}">Delete</a> </td>
+              <td><a class="btn btn-default" href="#"  th:href="@{'/index/delete/' +  *{id}}">Delete</a> </td>
             </tr>
           </table>
 
@@ -51,7 +51,7 @@
 
       <h3>Add new transaction</h3>
       <form id="form" th:object="${finances}" th:action="@{/index/entry}" method="post" >
-        <!--th:object="${finances}" th:action="@{/index/entry}" method="post"-->
+        <input type="hidden" th:field="*{id}"/>
         <div class="form-control">
           <label for="text">Text</label>
           <input type="text" id="text"      th:field="*{name}"        placeholder="Enter text..." />
@@ -62,7 +62,7 @@
           <input type="number" id="amount"     th:field="*{amount}"      placeholder="Enter amount..." />
         </div>
 
-        <button class="btn">Add transaction</button>
+        <button class="btn">Save transaction</button>
       </form>
     </div>
   </body>
