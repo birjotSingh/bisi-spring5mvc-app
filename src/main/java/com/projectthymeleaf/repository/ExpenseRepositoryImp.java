@@ -47,8 +47,7 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
     @Override
     public Expense getExpenseById(int id) {
         String query = "select * from expense where id= ?";
-        Expense expense = jdbcTemplate.queryForObject(query, new Object[]{id}, new BeanPropertyRowMapper<>(Expense.class));
-        return expense;
+        return jdbcTemplate.queryForObject(query, new Object[]{id}, new BeanPropertyRowMapper<>(Expense.class));
     }
 
     @Override
@@ -71,7 +70,6 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
     public void deleteById(Integer id) {
         String query = "delete from expense where id =?";
         jdbcTemplate.update(query, id);
-        System.out.println("deleted row!");
     }
 
     @Override

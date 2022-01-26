@@ -21,7 +21,7 @@ public class DaoConfig {
     @Value("${spring.datasource.driver-class-name}")
     String driverClass;
 
-    public DataSource getDataSource(){
+    public DataSource getDataSource() {
         HikariDataSource dataSource = new HikariDataSource();
         dataSource.setDriverClassName(driverClass);
         dataSource.setUsername(user);
@@ -31,12 +31,10 @@ public class DaoConfig {
     }
 
     @Bean
-    public JdbcTemplate getTemplate(){
+    public JdbcTemplate getTemplate() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         jdbcTemplate.setDataSource(getDataSource());
         return jdbcTemplate;
     }
-
-
 
 }

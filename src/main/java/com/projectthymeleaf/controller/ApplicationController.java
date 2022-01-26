@@ -1,4 +1,4 @@
-package com.projectthymeleaf.Controller;
+package com.projectthymeleaf.controller;
 
 import com.projectthymeleaf.model.Expense;
 import com.projectthymeleaf.repository.ExpenseRepositoryImp;
@@ -45,8 +45,7 @@ public class ApplicationController {
     @GetMapping("/index/view/{id}")
     public String viewEntry(@PathVariable Integer id, Model model) {
         Expense expenseById = repositoryImp.getExpenseById(id);
-        System.out.println("00--------------------------------------00 : "+expenseById.getCdate());
-        model.addAttribute("transaction",expenseById );
+        model.addAttribute("transaction", expenseById);
         return "view";
     }
 
