@@ -1,6 +1,7 @@
 package com.projectthymeleaf.repository;
 
 import com.projectthymeleaf.model.Expense;
+import com.projectthymeleaf.service.Calculator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,7 +13,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -26,18 +29,21 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
 
     @Override
     public Expense save(Expense expense) {
-        String query = "insert into expense (name, amount) values (?,?)";
+        String query = "insert into expense (name, amount,date_creation) values (?,?,?)";
+
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
                 PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                 preparedStatement.setString(1, expense.getName());
                 preparedStatement.setInt(2, expense.getAmount());
+               preparedStatement.setString(3, expense.getCreationDate());
                 return preparedStatement;
             }
         }, keyHolder);
 
         expense.setId(keyHolder.getKey().intValue());
+
         return expense;
     }
 
@@ -62,6 +68,13 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
             expenseList.add(expense);
         }
         return expenseList;
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        String query = "delete from expense where id =?";
+        jdbcTemplate.update(query, id);
+        System.out.println("deleted row!");
     }
 
 

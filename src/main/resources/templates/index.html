@@ -35,9 +35,9 @@
             <tr th:each="expense : ${expenses}" th:object="${expense}">
               <td th:text="*{name}"></td>
               <td th:text="'$' + *{amount}"></td>
-              <!--<td><a class="btn btn-default" href="#" th:href="@{'/widget/' + *{id}}">View</a> </td>
-              <td><a class="btn btn-default" href="#" th:href="@{'/widget/edit/' + *{id}}">Edit</a> </td>
-              <td><a class="btn btn-default" href="#" th:href="@{'/widget/delete/' +  *{id}}">Delete</a> </td>-->
+              <td><a class="btn btn-default" href="#" th:href="@{'/index/view/' + *{id}}">View</a> </td>
+              <td><a class="btn btn-default" href="#" th:href="@{'/index/edit/' + *{id}}">Edit</a> </td>
+              <td><a class="btn btn-default" href="#" th:href="@{'/index/delete/' +  *{id}}">Delete</a> </td>
             </tr>
           </table>
 
@@ -65,7 +65,5 @@
         <button class="btn">Add transaction</button>
       </form>
     </div>
-
-   <!-- <script src="script.js"></script>-->
   </body>
 </html>
