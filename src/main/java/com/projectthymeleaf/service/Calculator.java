@@ -4,12 +4,13 @@ import com.projectthymeleaf.model.Expense;
 import com.projectthymeleaf.repository.ExpenseRepositoryImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-@Component
+@Service
 public class Calculator {
 
     @Autowired
@@ -17,7 +18,7 @@ public class Calculator {
 
     public Integer sumTotal() {
         Integer sum = 0;
-        List<Expense> expenseList = expenseRepositoryImp.findAllExpenses();
+        List<Expense> expenseList = expenseRepositoryImp.getAllExpenses();
         for (Expense expense : expenseList
         ) {
             sum = sum + expense.getAmount();
@@ -27,7 +28,7 @@ public class Calculator {
 
     public Integer incomeCal() {
         Integer in = 0;
-        List<Expense> expenseList = expenseRepositoryImp.findAllExpenses();
+        List<Expense> expenseList = expenseRepositoryImp.getAllExpenses();
         for (Expense expense : expenseList
         ) {
             if (expense.getAmount() > 0) {
@@ -39,7 +40,7 @@ public class Calculator {
 
     public Integer expenseCal() {
         Integer out = 0;
-        List<Expense> expenseList = expenseRepositoryImp.findAllExpenses();
+        List<Expense> expenseList = expenseRepositoryImp.getAllExpenses();
         for (Expense expense : expenseList
         ) {
             if (expense.getAmount() < 0) {

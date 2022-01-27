@@ -6,14 +6,14 @@ import java.util.List;
 
 public interface ExpenseRepository {
 
-    public Expense save(Expense expense);
+     Expense insertExpense(Expense expense);
 
-    public Expense getExpenseById(int id);
+     Expense getExpenseById(int id);
 
-    public List<Expense> findAllExpenses();
+     List<Expense> getAllExpenses();
 
-    public void deleteById(Integer id);
+     void deleteById(Integer id);
 
-    public void update(Expense expense);
+     void update(Expense expense);
 
 }

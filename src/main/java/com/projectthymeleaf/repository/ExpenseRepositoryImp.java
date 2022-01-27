@@ -25,7 +25,7 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
     GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
     @Override
-    public Expense save(Expense expense) {
+    public Expense insertExpense(Expense expense) {
         String query = "insert into expense (name, amount, cdate) values (?,?,?)";
 
         jdbcTemplate.update(new PreparedStatementCreator() {
@@ -51,7 +51,7 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
     }
 
     @Override
-    public List<Expense> findAllExpenses() {
+    public List<Expense> getAllExpenses() {
         String query = "select * from expense";
         List<Expense> expenseList = new ArrayList<>();
         List<Map<String, Object>> maps = jdbcTemplate.queryForList(query);
