@@ -51,7 +51,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/index/delete/{id}")
-    public String deleteWidget(@PathVariable Integer id) {
+    public String deleteTransaction(@PathVariable Integer id) {
         processorImp.remove(id);
         return "redirect:/index";
     }
