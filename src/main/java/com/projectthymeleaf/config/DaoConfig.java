@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 
 public class DaoConfig {
 
-    @Value("${spring.datasource.ur}")
+    @Value("${spring.datasource.url}")
     String url;
 
     @Value("${spring.datasource.password}")

@@ -26,7 +26,7 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
 
     @Override
     public Expense save(Expense expense) {
-        String query = "insert into expense (name, amount,cdate) values (?,?,?)";
+        String query = "insert into expense (name, amount, cdate) values (?,?,?)";
 
         jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
@@ -46,7 +46,7 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
 
     @Override
     public Expense getExpenseById(int id) {
-        String query = "select * from expense where id= ?";
+        String query = "select * from expense where id = ?";
         return jdbcTemplate.queryForObject(query, new Object[]{id}, new BeanPropertyRowMapper<>(Expense.class));
     }
 
