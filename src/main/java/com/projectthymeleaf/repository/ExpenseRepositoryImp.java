@@ -15,6 +15,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public class ExpenseRepositoryImp implements ExpenseRepository {
@@ -39,8 +40,11 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
             }
         }, keyHolder);
 
-        expense.setId(keyHolder.getKey().intValue());
+        Optional<Number> id =  Optional.ofNullable(keyHolder.getKey());
 
+        if(!id.isEmpty()){
+            expense.setId(Integer.parseInt(String.valueOf(id.get())));
+        }
         return expense;
     }
 

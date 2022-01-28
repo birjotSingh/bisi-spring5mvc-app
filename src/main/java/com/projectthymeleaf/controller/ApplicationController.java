@@ -34,7 +34,7 @@ public class ApplicationController {
         if (expense.getId() == null) {
             expense.setCdate(calculator.currentDate());
             processorImp.save(expense);
-        } else {
+            } else {
             expense.setDateEdited(calculator.currentDate());
             processorImp.updateExpense(expense);
         }
