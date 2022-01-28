@@ -40,11 +40,8 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
             }
         }, keyHolder);
 
-        Optional<Number> id =  Optional.ofNullable(keyHolder.getKey());
-
-        if(!id.isEmpty()){
-            expense.setId(Integer.parseInt(String.valueOf(id.get())));
-        }
+        Optional<Number> key = Optional.ofNullable(keyHolder.getKey());
+        key.ifPresent(number -> expense.setId(number.intValue()));
 
         return expense;
     }
