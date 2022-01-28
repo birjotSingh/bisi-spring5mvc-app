@@ -1,7 +1,6 @@
 package com.projectthymeleaf.controller;
 
 import com.projectthymeleaf.model.Expense;
-import com.projectthymeleaf.repository.ExpenseRepositoryImp;
 import com.projectthymeleaf.service.Calculator;
 import com.projectthymeleaf.service.ProcessorImp;
 import org.springframework.beans.factory.annotation.Autowired;

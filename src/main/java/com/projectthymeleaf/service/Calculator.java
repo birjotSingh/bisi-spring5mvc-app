@@ -3,7 +3,6 @@ package com.projectthymeleaf.service;
 import com.projectthymeleaf.model.Expense;
 import com.projectthymeleaf.repository.ExpenseRepositoryImp;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
