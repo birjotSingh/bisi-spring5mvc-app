@@ -15,7 +15,6 @@ import static com.reactivestax.spring5mvc.constants.CommonConstants.*;
 
 /**
  * Sets up the accessLogsInterceptor to intercept specific paths
- *
  */
 @Configuration
 @Profile({ENV_DEFAULT, ENV_LOCAL, ENV_IST, ENV_SDF})

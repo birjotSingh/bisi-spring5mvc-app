@@ -9,6 +9,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.constraints.NotNull;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -16,6 +17,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public class WidgetRepositoryImp implements WidgetRepo {
@@ -30,7 +32,7 @@ public class WidgetRepositoryImp implements WidgetRepo {
 
         String query = "insert into widget_details (name, description) value (?,?)";
 
-        int i = jdbcTemplate.update(new PreparedStatementCreator() {
+        jdbcTemplate.update(new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -40,23 +42,25 @@ public class WidgetRepositoryImp implements WidgetRepo {
             }
         }, keyHolder);
 
-        int widgetId = keyHolder.getKey().intValue();
-        widget.setId((long) widgetId);
+
+        Optional<Number> id =  Optional.ofNullable(keyHolder.getKey());
+        if(!id.isEmpty()){
+            widget.setId(Long.parseLong(String.valueOf(id.get())));
+        }
+
         return widget;
     }
 
     @Override
     public Widget findWidgetById(Integer id) {
         String query = "select id, Name, Description from widget_details where id = ?";
-        Widget widget = jdbcTemplate.queryForObject(query, new Object[]{id}, new BeanPropertyRowMapper<>(Widget.class));
-        return widget;
+       return jdbcTemplate.queryForObject(query, new Object[]{id}, new BeanPropertyRowMapper<>(Widget.class));
     }
 
     @Override
     public void deleteWidgetById(Integer id) {
         String query = "delete from widget_details where id =?";
         jdbcTemplate.update(query, id);
-        System.out.println("deleted row!");
     }
 
     @Override
@@ -79,7 +83,7 @@ public class WidgetRepositoryImp implements WidgetRepo {
     public void updateWidget(Widget widget) {
         String query = "update widget_details set name=?, description=? where id=?";
         Object[] args = new Object[]{widget.getName(), widget.getDescription(), widget.getId()};
-        int flag = jdbcTemplate.update(query, args);
+        jdbcTemplate.update(query, args);
     }
 
 
