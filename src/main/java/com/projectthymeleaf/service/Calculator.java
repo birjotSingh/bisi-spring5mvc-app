@@ -15,9 +15,6 @@ import java.util.List;
 public class Calculator {
 
     @Autowired
-    ExpenseRepositoryImp expenseRepositoryImp;
-
-    @Autowired
     CalculatorRepositoryImp calculatorRepositoryImp;
 
     public Integer sumTotal() {
@@ -25,27 +22,11 @@ public class Calculator {
     }
 
     public Integer incomeCal() {
-       /* Integer in = 0;
-        List<Expense> expenseList = expenseRepositoryImp.getAllExpenses();
-        for (Expense expense : expenseList
-        ) {
-            if (expense.getAmount() > 0) {
-                in = in + expense.getAmount();
-            }
-        }*/
         return calculatorRepositoryImp.incomeTotal();
     }
 
     public Integer expenseCal() {
-        Integer out = 0;
-        List<Expense> expenseList = expenseRepositoryImp.getAllExpenses();
-        for (Expense expense : expenseList
-        ) {
-            if (expense.getAmount() < 0) {
-                out = out + expense.getAmount();
-            }
-        }
-        return out;
+        return calculatorRepositoryImp.expenseTotal();
     }
 
     public String currentDate() {

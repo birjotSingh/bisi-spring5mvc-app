@@ -13,8 +13,13 @@ public class ProcessorImp implements Processor {
     @Autowired
     ExpenseRepository expenseRepository;
 
+    @Autowired
+    Calculator calculator;
+
     @Override
     public Expense save(Expense expense) {
+        expense.setCdate(calculator.currentDate());
+        calculator.selectTransactionType(expense);
         return expenseRepository.insertExpense(expense);
     }
 
@@ -25,12 +30,16 @@ public class ProcessorImp implements Processor {
 
     @Override
     public void updateExpense(Expense expense) {
+        expense.setDateEdited(calculator.currentDate());
+        calculator.selectTransactionType(expense);
         expenseRepository.update(expense);
     }
 
     @Override
     public Expense findExpenseById(Integer id) {
-        return expenseRepository.getExpenseById(id);
+        Expense expense1 = expenseRepository.getExpenseById(id);
+        System.out.println(expense1 + "---------------------------------------------------------------------------");
+        return expense1;
     }
 
     @Override

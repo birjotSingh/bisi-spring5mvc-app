@@ -32,12 +32,8 @@ public class ApplicationController {
     @PostMapping("/index/entry")
     public String newEntry(Expense expense, Model model) {
         if (expense.getId() == null) {
-            expense.setCdate(calculator.currentDate());
-            calculator.selectTransactionType(expense);
             processorImp.save(expense);
         } else {
-            expense.setDateEdited(calculator.currentDate());
-            calculator.selectTransactionType(expense);
             processorImp.updateExpense(expense);
         }
         return "redirect:/index";

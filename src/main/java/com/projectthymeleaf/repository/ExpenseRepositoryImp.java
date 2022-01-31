@@ -44,7 +44,6 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
 
         Optional<Number> key = Optional.ofNullable(keyHolder.getKey());
         key.ifPresent(number -> expense.setId(number.intValue()));
-
         return expense;
     }
 
@@ -64,6 +63,7 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
             Expense expense = new Expense();
             expense.setId(Integer.valueOf(String.valueOf(expenseRow.get("id"))));
             expense.setAmount(Integer.valueOf(String.valueOf(expenseRow.get("amount"))));
+            expense.setType(TransactionType.valueOf(String.valueOf(expenseRow.get("transaction_type"))));
             expense.setName(String.valueOf(expenseRow.get("name")));
             expenseList.add(expense);
         }
@@ -79,9 +79,8 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
     @Override
     public void update(Expense expense) {
         String query = "update expense set name=?, amount=?, transaction_type=?, dateEdited=? where id=?";
-        Object[] args = new Object[]{expense.getName(), expense.getAmount(),expense.getType().name(), expense.getDateEdited(), expense.getId()};
+        Object[] args = new Object[]{expense.getName(), expense.getAmount(), expense.getType().name(), expense.getDateEdited(), expense.getId()};
         jdbcTemplate.update(query, args);
     }
-
 
 }
