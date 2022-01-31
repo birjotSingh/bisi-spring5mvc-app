@@ -20,7 +20,8 @@ public class CalculatorRepositoryImp implements CalculatorRepository {
 
     @Override
     public Integer incomeTotal() {
-        return null;
+        String query = "select sum(amount) from expense where transaction_type=?";
+        return jdbcTemplate.queryForObject(query,new Object[]{"CREDIT"},Integer.class);
     }
 
     @Override

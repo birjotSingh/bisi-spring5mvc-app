@@ -21,26 +21,19 @@ public class Calculator {
     CalculatorRepositoryImp calculatorRepositoryImp;
 
     public Integer sumTotal() {
-
-       /* Integer sum = 0;
-        List<Expense> expenseList = expenseRepositoryImp.getAllExpenses();
-        for (Expense expense : expenseList
-        ) {
-            sum = sum + expense.getAmount();
-        }*/
         return calculatorRepositoryImp.total();
     }
 
     public Integer incomeCal() {
-        Integer in = 0;
+       /* Integer in = 0;
         List<Expense> expenseList = expenseRepositoryImp.getAllExpenses();
         for (Expense expense : expenseList
         ) {
             if (expense.getAmount() > 0) {
                 in = in + expense.getAmount();
             }
-        }
-        return in;
+        }*/
+        return calculatorRepositoryImp.incomeTotal();
     }
 
     public Integer expenseCal() {
