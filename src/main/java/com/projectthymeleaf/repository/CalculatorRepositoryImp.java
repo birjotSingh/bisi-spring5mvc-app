@@ -11,22 +11,22 @@ public class CalculatorRepositoryImp implements CalculatorRepository {
     JdbcTemplate jdbcTemplate;
 
     @Override
-    public Integer total() {
+    public Double total() {
         String query = "select sum(amount) from expense";
         return jdbcTemplate.queryForObject(
-                query, Integer.class);
+                query, Double.class);
 
     }
 
     @Override
-    public Integer incomeTotal() {
+    public Double incomeTotal() {
         String query = "select sum(amount) from expense where transaction_type=?";
-        return jdbcTemplate.queryForObject(query,new Object[]{"CREDIT"},Integer.class);
+        return jdbcTemplate.queryForObject(query,new Object[]{"CREDIT"},Double.class);
     }
 
     @Override
-    public Integer expenseTotal() {
+    public Double expenseTotal() {
         String query = "select sum(amount) from expense where transaction_type=?";
-        return jdbcTemplate.queryForObject(query,new Object[]{"DEBIT"},Integer.class);
+        return jdbcTemplate.queryForObject(query,new Object[]{"DEBIT"},Double.class);
     }
 }

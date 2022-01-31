@@ -7,7 +7,7 @@ public class Expense {
 
     Integer id;
     String name;
-    Integer amount;
+    Double amount;
     String cdate;
     String dateEdited;
     TransactionType type;

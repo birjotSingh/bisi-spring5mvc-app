@@ -35,7 +35,7 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
                 PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                 preparedStatement.setString(1, expense.getName());
-                preparedStatement.setInt(2, expense.getAmount());
+                preparedStatement.setDouble(2, expense.getAmount());
                 preparedStatement.setString(3, expense.getType().name());
                 preparedStatement.setString(4, expense.getCdate());
                 return preparedStatement;
@@ -49,7 +49,7 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
 
     @Override
     public Expense getExpenseById(int id) {
-        String query = "select * from expense where id = ?";
+        String query = "select  id, name, transaction_type as type, amount, cdate, dateEdited from expense where id = ?";
         return jdbcTemplate.queryForObject(query, new Object[]{id}, new BeanPropertyRowMapper<>(Expense.class));
     }
 
@@ -62,7 +62,7 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
         for (Map<String, Object> expenseRow : maps) {
             Expense expense = new Expense();
             expense.setId(Integer.valueOf(String.valueOf(expenseRow.get("id"))));
-            expense.setAmount(Integer.valueOf(String.valueOf(expenseRow.get("amount"))));
+            expense.setAmount(Double.valueOf(String.valueOf(expenseRow.get("amount"))));
             expense.setType(TransactionType.valueOf(String.valueOf(expenseRow.get("transaction_type"))));
             expense.setName(String.valueOf(expenseRow.get("name")));
             expenseList.add(expense);

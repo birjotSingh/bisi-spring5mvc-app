@@ -17,16 +17,28 @@ public class Calculator {
     @Autowired
     CalculatorRepositoryImp calculatorRepositoryImp;
 
-    public Integer sumTotal() {
-        return calculatorRepositoryImp.total();
+    public Double sumTotal() {
+        Double total = calculatorRepositoryImp.total();
+        if(total==(null)){
+            return 0.0;
+        }
+        return total;
     }
 
-    public Integer incomeCal() {
-        return calculatorRepositoryImp.incomeTotal();
+    public Double incomeCal() {
+        Double aDouble = calculatorRepositoryImp.incomeTotal();
+        if(aDouble==(null)){
+            return 0.0;
+        }
+        return aDouble;
     }
 
-    public Integer expenseCal() {
-        return calculatorRepositoryImp.expenseTotal();
+    public Double expenseCal() {
+        Double aDouble = calculatorRepositoryImp.expenseTotal();
+        if(aDouble==(null)){
+            return 0.0;
+        }
+        return aDouble;
     }
 
     public String currentDate() {

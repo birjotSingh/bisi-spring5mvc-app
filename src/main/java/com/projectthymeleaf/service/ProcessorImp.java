@@ -38,7 +38,6 @@ public class ProcessorImp implements Processor {
     @Override
     public Expense findExpenseById(Integer id) {
         Expense expense1 = expenseRepository.getExpenseById(id);
-        System.out.println(expense1 + "---------------------------------------------------------------------------");
         return expense1;
     }
 
