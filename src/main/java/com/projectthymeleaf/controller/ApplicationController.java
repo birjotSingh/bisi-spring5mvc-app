@@ -1,6 +1,7 @@
 package com.projectthymeleaf.controller;
 
-import com.projectthymeleaf.model.Expense;
+import com.projectthymeleaf.dto.ExpenseMapper;
+import com.projectthymeleaf.model.ExpenseDto;
 import com.projectthymeleaf.service.Calculator;
 import com.projectthymeleaf.service.ProcessorImp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
+import java.util.stream.Collectors;
 
 @Controller
 public class ApplicationController {
@@ -21,8 +25,8 @@ public class ApplicationController {
 
     @GetMapping("/index")
     public String mainPage(Model model) {
-        model.addAttribute("finances", new Expense());
-        model.addAttribute("expenses", processorImp.findAllExpenses());
+        model.addAttribute("finances", new ExpenseDto());
+        model.addAttribute("expenses", processorImp.findAllExpenses().stream().map(ExpenseMapper.INSTANCE::toExpenseDto).collect(Collectors.toList()));
         model.addAttribute("balance", calculator.sumTotal());
         model.addAttribute("in", calculator.incomeCal());
         model.addAttribute("out", calculator.expenseCal());
@@ -30,11 +34,11 @@ public class ApplicationController {
     }
 
     @PostMapping("/index/entry")
-    public String newEntry(Expense expense, Model model) {
-        if (expense.getId() == null) {
-            processorImp.save(expense);
+    public String newEntry(@Valid ExpenseDto expenseDto, Model model) {
+        if (expenseDto.getId() == null) {
+            processorImp.save(ExpenseMapper.INSTANCE.toExpense(expenseDto));
         } else {
-            processorImp.updateExpense(expense);
+            processorImp.updateExpense(ExpenseMapper.INSTANCE.toExpense(expenseDto));
         }
         return "redirect:/index";
     }
@@ -42,7 +46,7 @@ public class ApplicationController {
 
     @GetMapping("/index/view/{id}")
     public String viewEntry(@PathVariable Integer id, Model model) {
-        Expense expenseById = processorImp.findExpenseById(id);
+        ExpenseDto expenseById = ExpenseMapper.INSTANCE.toExpenseDto(processorImp.findExpenseById(id));
         model.addAttribute("transaction", expenseById);
         return "view";
     }
@@ -55,11 +59,11 @@ public class ApplicationController {
 
     @GetMapping("/index/edit/{id}")
     public String editTransaction(@PathVariable Integer id, Model model) {
-        model.addAttribute("expenses", processorImp.findAllExpenses());
+        model.addAttribute("expenses", processorImp.findAllExpenses().stream().map(ExpenseMapper.INSTANCE::toExpenseDto).collect(Collectors.toList()));//
         model.addAttribute("balance", calculator.sumTotal());
         model.addAttribute("in", calculator.incomeCal());
         model.addAttribute("out", calculator.expenseCal());
-        model.addAttribute("finances", processorImp.findExpenseById(id));
+        model.addAttribute("finances", ExpenseMapper.INSTANCE.toExpenseDto(processorImp.findExpenseById(id)));
         return "index";
     }
 }

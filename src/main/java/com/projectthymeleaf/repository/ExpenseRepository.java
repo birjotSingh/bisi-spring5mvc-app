@@ -1,6 +1,7 @@
 package com.projectthymeleaf.repository;
 
-import com.projectthymeleaf.model.Expense;
+import com.projectthymeleaf.dto.Expense;
+import com.projectthymeleaf.model.ExpenseDto;
 
 import java.util.List;
 
@@ -14,6 +15,6 @@ public interface ExpenseRepository {
 
      void deleteById(Integer id);
 
-     void update(Expense expense);
+     Expense update(Expense expense);
 
 }

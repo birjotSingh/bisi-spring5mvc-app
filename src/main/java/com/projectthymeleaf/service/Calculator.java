@@ -1,15 +1,14 @@
 package com.projectthymeleaf.service;
 
-import com.projectthymeleaf.model.Expense;
+import com.projectthymeleaf.dto.Expense;
+import com.projectthymeleaf.model.ExpenseDto;
 import com.projectthymeleaf.model.TransactionType;
 import com.projectthymeleaf.repository.CalculatorRepositoryImp;
-import com.projectthymeleaf.repository.ExpenseRepositoryImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class Calculator {
@@ -50,9 +49,9 @@ public class Calculator {
 
    public Expense selectTransactionType(Expense expense) {
         if (expense.getAmount() >= 0) {
-            expense.setType(TransactionType.CREDIT);
+            expense.setTransactionType(TransactionType.CREDIT);
         } else {
-            expense.setType(TransactionType.DEBIT);
+            expense.setTransactionType(TransactionType.DEBIT);
         }
         return expense;
     }

@@ -1,5 +1,6 @@
-package com.projectthymeleaf.model;
+package com.projectthymeleaf.dto;
 
+import com.projectthymeleaf.model.TransactionType;
 import lombok.Data;
 
 @Data
@@ -10,6 +11,6 @@ public class Expense {
     Double amount;
     String cdate;
     String dateEdited;
-    TransactionType type;
+    TransactionType transactionType;
 
 }

@@ -32,7 +32,7 @@
                 <th></th>
                 <th></th>
             </tr>
-            <tr th:each="expense : ${expenses}" th:object="${expense}">
+            <tr th:each="expenseDto : ${expenses}" th:object="${expenseDto}">
                 <td th:text="*{name}"></td>
                 <td th:text="'$' + *{amount}"></td>
                 <td><a class="btn btn-default" href="#" th:href="@{'/index/view/' + *{id}}">View</a></td>
@@ -55,7 +55,7 @@
         </div>
 
         <div class="form-control">
-            <label for="amount">Amount <br/> (negative - expense, positive - income)</label>
+            <label for="amount">Amount <br/> (negative - expenseDto, positive - income)</label>
             <input type="number" id="amount" th:field="*{amount}" placeholder="Enter amount..."/>
         </div>
 

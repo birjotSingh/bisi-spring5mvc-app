@@ -1,6 +1,6 @@
 package com.projectthymeleaf.repository;
 
-import com.projectthymeleaf.model.Expense;
+import com.projectthymeleaf.dto.Expense;
 import com.projectthymeleaf.model.TransactionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -36,7 +36,7 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
                 PreparedStatement preparedStatement = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                 preparedStatement.setString(1, expense.getName());
                 preparedStatement.setDouble(2, expense.getAmount());
-                preparedStatement.setString(3, expense.getType().name());
+                preparedStatement.setString(3, expense.getTransactionType().name());
                 preparedStatement.setString(4, expense.getCdate());
                 return preparedStatement;
             }
@@ -49,7 +49,7 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
 
     @Override
     public Expense getExpenseById(int id) {
-        String query = "select  id, name, transaction_type as type, amount, cdate, dateEdited from expense where id = ?";
+        String query = "select  id, name, transaction_type as transactionType, amount, cdate, dateEdited from expense where id = ?";
         return jdbcTemplate.queryForObject(query, new Object[]{id}, new BeanPropertyRowMapper<>(Expense.class));
     }
 
@@ -63,11 +63,12 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
             Expense expense = new Expense();
             expense.setId(Integer.valueOf(String.valueOf(expenseRow.get("id"))));
             expense.setAmount(Double.valueOf(String.valueOf(expenseRow.get("amount"))));
-            expense.setType(TransactionType.valueOf(String.valueOf(expenseRow.get("transaction_type"))));
+            expense.setTransactionType(TransactionType.valueOf(String.valueOf(expenseRow.get("transaction_type"))));
             expense.setName(String.valueOf(expenseRow.get("name")));
             expenseList.add(expense);
         }
-        return expenseList;
+
+        return expenseList ;
     }
 
     @Override
@@ -77,10 +78,11 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
     }
 
     @Override
-    public void update(Expense expense) {
+    public Expense update(Expense expense) {
         String query = "update expense set name=?, amount=?, transaction_type=?, dateEdited=? where id=?";
-        Object[] args = new Object[]{expense.getName(), expense.getAmount(), expense.getType().name(), expense.getDateEdited(), expense.getId()};
+        Object[] args = new Object[]{expense.getName(), expense.getAmount(), expense.getTransactionType().name(), expense.getDateEdited(), expense.getId()};
         jdbcTemplate.update(query, args);
+        return expense;
     }
 
 }
