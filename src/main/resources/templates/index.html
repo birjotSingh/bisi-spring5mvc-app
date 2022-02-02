@@ -40,23 +40,25 @@
                 <td><a class="btn btn-default" href="#" th:href="@{'/index/delete/' +  *{id}}">Delete</a></td>
             </tr>
         </table>
-
     </div>
     <ul id="list" class="list">
-
+        <!--<div th:each="err: ${#fields.hasAnyErrors()}" th:text="${err}"}></div>-->
     </ul>
+
 
     <h3>Add new transaction</h3>
     <form id="form" th:object="${finances}" th:action="@{/index/entry}" method="post">
         <input type="hidden" th:field="*{id}"/>
         <div class="form-control">
-            <label for="text">Text</label>
+            <label for="text">Description</label>
             <input type="text" id="text" th:field="*{name}" placeholder="Enter text..."/>
+            <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}" />
         </div>
 
         <div class="form-control">
             <label for="amount">Amount <br/> (negative - expenseDto, positive - income)</label>
             <input type="number" id="amount" th:field="*{amount}" placeholder="Enter amount..."/>
+            <p th:if="${#fields.hasErrors('amount')}" th:errorclass="error" th:errors="*{amount}" >here s</p>
         </div>
 
         <button class="btn">Save transaction</button>
