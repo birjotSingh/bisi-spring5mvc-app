@@ -5,11 +5,9 @@ import com.projectthymeleaf.model.ExpenseDto;
 import com.projectthymeleaf.service.Calculator;
 import com.projectthymeleaf.service.ProcessorImp;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +28,8 @@ public class ApplicationController {
     @GetMapping("/index")
     public String mainPage(Model model) {
         model.addAttribute("finances", new ExpenseDto());
-        model.addAttribute("expenses", processorImp.findAllExpenses().stream().map(ExpenseMapper.INSTANCE::toExpenseDto).collect(Collectors.toList()));
+        model.addAttribute("expenses", processorImp.findAllExpenses().stream()
+                .map(ExpenseMapper.INSTANCE::toExpenseDto).collect(Collectors.toList()));
         model.addAttribute("balance", calculator.sumTotal());
         model.addAttribute("in", calculator.incomeCal());
         model.addAttribute("out", calculator.expenseCal());
@@ -38,16 +37,14 @@ public class ApplicationController {
     }
 
     @PostMapping("/index/entry")
-    public String newEntry(@Valid @ModelAttribute ("finances") ExpenseDto expenseDto, BindingResult bindingResult, Model model) {
+    public String newEntry(@Valid @ModelAttribute("finances") ExpenseDto expenseDto, BindingResult bindingResult, Model model) {
 
         System.out.println("ss" + bindingResult.hasErrors() + bindingResult.toString());
         if (bindingResult.hasErrors()) {
-            /*model.addAttribute("finances", expenseDto);*/
             model.addAttribute("expenses", processorImp.findAllExpenses().stream().map(ExpenseMapper.INSTANCE::toExpenseDto).collect(Collectors.toList()));
             model.addAttribute("balance", calculator.sumTotal());
             model.addAttribute("in", calculator.incomeCal());
             model.addAttribute("out", calculator.expenseCal());
-        //    model.addAttribute("error",bindingResult);
             return "index";
         } else {
 

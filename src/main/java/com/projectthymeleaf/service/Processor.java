@@ -11,7 +11,7 @@ public interface Processor {
 
     void remove(Integer id);
 
-    void updateExpense(Expense expense);
+    Expense updateExpense(Expense expense);
 
     Expense findExpenseById(Integer id);
 

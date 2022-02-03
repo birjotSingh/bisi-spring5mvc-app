@@ -1,6 +1,5 @@
 package com.projectthymeleaf;
 
-import com.projectthymeleaf.model.ExpenseDto;
 import org.junit.jupiter.api.Test;
 
 import javax.validation.Validation;

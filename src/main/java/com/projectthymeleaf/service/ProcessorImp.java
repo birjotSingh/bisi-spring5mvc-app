@@ -21,7 +21,6 @@ public class ProcessorImp implements Processor {
     public Expense save(Expense expense) {
         expense.setCdate(calculator.currentDate());
         calculator.selectTransactionType(expense);
-
         return expenseRepository.insertExpense(expense);
     }
 
@@ -31,10 +30,10 @@ public class ProcessorImp implements Processor {
     }
 
     @Override
-    public void updateExpense(Expense expense) {
+    public Expense updateExpense(Expense expense) {
         expense.setDateEdited(calculator.currentDate());
         calculator.selectTransactionType(expense);
-        expenseRepository.update(expense);
+        return expenseRepository.update(expense);
     }
 
     @Override

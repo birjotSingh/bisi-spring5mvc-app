@@ -68,7 +68,7 @@ public class ExpenseRepositoryImp implements ExpenseRepository {
             expenseList.add(expense);
         }
 
-        return expenseList ;
+        return expenseList;
     }
 
     @Override
