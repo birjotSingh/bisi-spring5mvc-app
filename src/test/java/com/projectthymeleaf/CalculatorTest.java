@@ -58,4 +58,10 @@ public class CalculatorTest {
         expenseRepository.insertExpense(expense1);
         Assertions.assertThat(calculator.sumTotal()).isEqualTo(10.0);
     }
+
+    @Test
+    public void testSelectedTransactionType(){
+        Expense expenseReturned = calculator.selectTransactionType(expense1);
+        Assertions.assertThat(expenseReturned.getTransactionType()).isEqualTo(TransactionType.DEBIT);
+    }
 }

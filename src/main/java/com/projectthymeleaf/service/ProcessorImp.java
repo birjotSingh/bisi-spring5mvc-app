@@ -16,7 +16,6 @@ public class ProcessorImp implements Processor {
     @Autowired
     Calculator calculator;
 
-
     @Override
     public Expense save(Expense expense) {
         expense.setCdate(calculator.currentDate());

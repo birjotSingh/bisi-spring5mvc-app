@@ -1,5 +1,6 @@
 package com.projectthymeleaf.model;
 
+import com.projectthymeleaf.validator.NotZero;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -16,6 +17,7 @@ public class ExpenseDto {
     String name;
 
     @NotNull(message = "amount cannot be null")
+    @NotZero(message = "amount cannot be zero!")
     Double amount;
 
     String cdate;

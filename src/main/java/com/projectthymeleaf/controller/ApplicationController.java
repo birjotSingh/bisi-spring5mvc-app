@@ -57,7 +57,6 @@ public class ApplicationController {
         }
     }
 
-
     @GetMapping("/index/view/{id}")
     public String viewEntry(@PathVariable Integer id, Model model) {
         ExpenseDto expenseById = ExpenseMapper.INSTANCE.toExpenseDto(processorImp.findExpenseById(id));
