@@ -1,6 +1,6 @@
 package com.projectthymeleaf.dto;
 
-import com.projectthymeleaf.model.ExpenseDto;
+import com.projectthymeleaf.model.Expense;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;

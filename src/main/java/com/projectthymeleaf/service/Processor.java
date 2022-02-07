@@ -1,7 +1,6 @@
 package com.projectthymeleaf.service;
 
-import com.projectthymeleaf.dto.Expense;
-import com.projectthymeleaf.model.ExpenseDto;
+import com.projectthymeleaf.model.Expense;
 
 import java.util.List;
 

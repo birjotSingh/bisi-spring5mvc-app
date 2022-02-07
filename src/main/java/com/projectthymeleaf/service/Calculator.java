@@ -1,7 +1,6 @@
 package com.projectthymeleaf.service;
 
-import com.projectthymeleaf.dto.Expense;
-import com.projectthymeleaf.model.ExpenseDto;
+import com.projectthymeleaf.model.Expense;
 import com.projectthymeleaf.model.TransactionType;
 import com.projectthymeleaf.repository.CalculatorRepositoryImp;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package com.projectthymeleaf.service;
 
-import com.projectthymeleaf.dto.Expense;
+import com.projectthymeleaf.model.Expense;
 import com.projectthymeleaf.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

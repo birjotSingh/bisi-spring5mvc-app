@@ -1,6 +1,6 @@
 package com.projectthymeleaf;
 
-import com.projectthymeleaf.dto.Expense;
+import com.projectthymeleaf.model.Expense;
 import com.projectthymeleaf.model.TransactionType;
 import com.projectthymeleaf.repository.ExpenseRepository;
 import org.assertj.core.api.Assertions;

@@ -1,53 +1,62 @@
 package com.projectthymeleaf;
 
-import org.junit.Before;
+import com.projectthymeleaf.model.Expense;
+import com.projectthymeleaf.dto.ExpenseDto;
+import com.projectthymeleaf.service.ProcessorImp;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
-import org.springframework.test.web.servlet.MockMvcResultMatchersDsl;
-import org.springframework.test.web.servlet.ResultMatcher;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
-//@WebMvcTest
+@AutoConfigureMockMvc
+@SpringBootTest
 public class ApplicationControllerMockMvcTest {
 
 
-    /*@Autowired
-    private WebApplicationContext wac;
-
     @Autowired
-    private MockMvc mockMvc;*/
+    private MockMvc mockMvc;
 
-    /*@Before
-    public void setup(){
-        DefaultMockMvcBuilder builder = MockMvcBuilders.webAppContextSetup(this.wac);
-        this.mockMvc = builder.build();
+    @MockBean
+    ProcessorImp processorImp;
+
+    @SneakyThrows
+    @Test
+    void testViewByID() {
+
+        ExpenseDto expenseDto = ExpenseDto.builder().name("grocerry").amount(23.0).build();
+
+        Expense expense = Expense.builder().name("grocerry").amount(23.0).build();
+        BDDMockito
+                .given(processorImp.findExpenseById(1))
+                .willReturn(expense);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/index/entry"))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("transaction", expenseDto))
+                .andExpect(view().name("view"));
     }
 
+    @SneakyThrows
     @Test
-    public void testMyController() throws Exception{
-        ResultMatcher resultMatcher = MockMvcResultMatchers.status().isOk();
+    void testInsert() {
 
-        *//*MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/index")
-                .contentType(MediaType.APPLICATION_JSON).content("{}");*//*
+        ExpenseDto expenseDto = ExpenseDto.builder().name("grocerry").amount(23.0).build();
 
-        MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.get("/index/view/1");
-        this.mockMvc.perform(builder);
+        Expense expense = Expense.builder().name("grocerry").amount(23.0).build();
+        BDDMockito
+                .given(processorImp.findExpenseById(1))
+                .willReturn(expense);
 
-
-    }*/
-
+        mockMvc.perform(MockMvcRequestBuilders.get("/index/view/1"))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("transaction", expenseDto))
+                .andExpect(view().name("view"));
+    }
 }

@@ -1,7 +1,7 @@
 package com.projectthymeleaf.controller;
 
 import com.projectthymeleaf.dto.ExpenseMapper;
-import com.projectthymeleaf.model.ExpenseDto;
+import com.projectthymeleaf.dto.ExpenseDto;
 import com.projectthymeleaf.service.Calculator;
 import com.projectthymeleaf.service.ProcessorImp;
 import org.springframework.beans.factory.annotation.Autowired;

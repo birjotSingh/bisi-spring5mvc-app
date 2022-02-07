@@ -1,6 +1,6 @@
 package com.projectthymeleaf.repository;
 
-import com.projectthymeleaf.dto.Expense;
+import com.projectthymeleaf.model.Expense;
 import com.projectthymeleaf.model.TransactionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

@@ -1,6 +1,5 @@
-package com.projectthymeleaf.dto;
+package com.projectthymeleaf.model;
 
-import com.projectthymeleaf.model.TransactionType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
