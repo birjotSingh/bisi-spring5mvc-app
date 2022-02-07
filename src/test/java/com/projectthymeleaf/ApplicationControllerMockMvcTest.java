@@ -1,7 +1,8 @@
 package com.projectthymeleaf;
 
-import com.projectthymeleaf.model.Expense;
 import com.projectthymeleaf.dto.ExpenseDto;
+import com.projectthymeleaf.model.Expense;
+import com.projectthymeleaf.service.Calculator;
 import com.projectthymeleaf.service.ProcessorImp;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.validation.BindingResult;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -26,26 +28,15 @@ public class ApplicationControllerMockMvcTest {
     @MockBean
     ProcessorImp processorImp;
 
+    @MockBean
+    Calculator calculator;
+
+    @MockBean
+    BindingResult bindingResult;
+
     @SneakyThrows
     @Test
     void testViewByID() {
-
-        ExpenseDto expenseDto = ExpenseDto.builder().name("grocerry").amount(23.0).build();
-
-        Expense expense = Expense.builder().name("grocerry").amount(23.0).build();
-        BDDMockito
-                .given(processorImp.findExpenseById(1))
-                .willReturn(expense);
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/index/entry"))
-                .andExpect(status().isOk())
-                .andExpect(model().attribute("transaction", expenseDto))
-                .andExpect(view().name("view"));
-    }
-
-    @SneakyThrows
-    @Test
-    void testInsert() {
 
         ExpenseDto expenseDto = ExpenseDto.builder().name("grocerry").amount(23.0).build();
 
@@ -59,4 +50,42 @@ public class ApplicationControllerMockMvcTest {
                 .andExpect(model().attribute("transaction", expenseDto))
                 .andExpect(view().name("view"));
     }
+
+    @SneakyThrows
+    @Test
+    void testMainPage() {
+
+        ExpenseDto expenseDto = new ExpenseDto();
+
+        BDDMockito
+                .given(calculator.incomeCal())
+                .willReturn(0.0);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/index"))
+                .andExpect(status().isOk())
+                .andExpect(model().attribute("finances", expenseDto))
+                .andExpect(model().attribute("in", 0.0))
+                .andExpect(view().name("index"));
+    }
+
+   /* @SneakyThrows
+    @Test
+    void testInsert() {
+
+        ExpenseDto expenseDto = ExpenseDto.builder().name("grocerry").id(2).amount(23.0).build();
+
+        Expense expense = Expense.builder().id(2).name("grocerry").amount(23.0).build();
+
+        BDDMockito
+                .given(processorImp.updateExpense(expense))
+                .willReturn(expense);
+
+        BDDMockito.given(bindingResult.hasErrors()).willReturn(false);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/index/entry"))
+                .andExpect(status().isOk()).andExpect(model().attribute("finances", expenseDto))
+                .andExpect(view().name("redirect:/index"));
+    }*/
+
+
 }

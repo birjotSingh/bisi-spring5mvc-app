@@ -48,9 +48,11 @@ public class ApplicationController {
             return "index";
         } else {
 
+            System.out.println("entered#######################################################");
             if (expenseDto.getId() == null) {
                 processorImp.save(ExpenseMapper.INSTANCE.toExpense(expenseDto));
             } else {
+                System.out.println("entered updarte***********************************************");
                 processorImp.updateExpense(ExpenseMapper.INSTANCE.toExpense(expenseDto));
             }
             return "redirect:/index";
