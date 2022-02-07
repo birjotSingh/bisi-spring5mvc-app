@@ -16,8 +16,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.event.annotation.BeforeTestMethod;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
+@Transactional
 public class CalculatorTest {
 
     @Autowired
@@ -29,11 +31,6 @@ public class CalculatorTest {
     @Autowired
     Calculator calculator;
 
-   /* @Before
-    public void preparation(){
-        String queryS="drop table expense1 if exists";
-        jdbcTemplate.update(queryS);
-    }*/
 
     Expense expense = Expense.builder().transactionType(TransactionType.CREDIT).amount(30.0).build();
     Expense expense1 = Expense.builder().transactionType(TransactionType.DEBIT).amount(-20.0).build();
