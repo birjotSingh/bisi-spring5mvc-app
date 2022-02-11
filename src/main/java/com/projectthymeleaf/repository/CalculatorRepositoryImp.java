@@ -15,7 +15,6 @@ public class CalculatorRepositoryImp implements CalculatorRepository {
         String query = "select sum(amount) from expense";
         return jdbcTemplate.queryForObject(
                 query, Double.class);
-
     }
 
     @Override

@@ -68,24 +68,4 @@ public class ApplicationControllerMockMvcTest {
                 .andExpect(view().name("index"));
     }
 
-   /* @SneakyThrows
-    @Test
-    void testInsert() {
-
-        ExpenseDto expenseDto = ExpenseDto.builder().name("grocerry").id(2).amount(23.0).build();
-
-        Expense expense = Expense.builder().id(2).name("grocerry").amount(23.0).build();
-
-        BDDMockito
-                .given(processorImp.updateExpense(expense))
-                .willReturn(expense);
-
-        BDDMockito.given(bindingResult.hasErrors()).willReturn(false);
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/index/entry"))
-                .andExpect(status().isOk()).andExpect(model().attribute("finances", expenseDto))
-                .andExpect(view().name("redirect:/index"));
-    }*/
-
-
 }

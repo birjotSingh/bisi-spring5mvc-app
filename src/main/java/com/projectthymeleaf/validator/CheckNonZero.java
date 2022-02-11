@@ -8,7 +8,6 @@ import javax.validation.ConstraintValidatorContext;
 @Slf4j
 public class CheckNonZero implements ConstraintValidator<NotZero, Double> {
 
-
     @Override
     public void initialize(NotZero constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
@@ -18,4 +17,5 @@ public class CheckNonZero implements ConstraintValidator<NotZero, Double> {
     public boolean isValid(Double value, ConstraintValidatorContext context) {
         return value !=null && value!=0;
     }
+
 }
